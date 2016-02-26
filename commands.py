@@ -2,7 +2,6 @@
 class commands(object):
 
     def quit(self):
-        allcmd.append(quit)
         confirm = raw_input("Are you sure you want to quit (Yes/No)? Make sure you save! ")
         confirm = confirm.lower()
         if confirm == 'yes':
