@@ -9,7 +9,9 @@ class commands(object):
         confirm = confirm.lower()
         if confirm[0] == 'y':
             print "Game over"
-            game_over = True
+            return True
+        else:
+            return False
 
     def status(self, player):
         print ("*"*10)
@@ -51,4 +53,8 @@ class commands(object):
 
     def help(self):
         print ("The following commands are useable: ")
-        print ("Help, Hit, Load, Quit, Pay, Save")
+        self.cmds = []
+        for x in dir(self):
+            if x[0] != "_" and x != 'cmds' and x != 'status':
+                self.cmds.append(x)
+        print self.cmds

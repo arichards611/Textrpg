@@ -26,7 +26,7 @@ def game():
             command = raw_input("Please enter a command: ")
             command = command.lower()
             if command == 'quit':
-                instance.quit()
+                game_over = instance.quit()
             elif command == ('hit'): # Debug to test taking damage
                 instance.hit(player)
             elif command == ('pay'): # Debug to test losing gold
