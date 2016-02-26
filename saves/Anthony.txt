@@ -1,1 +1,0 @@
-{"hp": 15, "name": "Anthony", "gold": 0}
