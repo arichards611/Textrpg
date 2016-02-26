@@ -27,7 +27,6 @@ def game():
             command = command.lower()
             if command == 'quit':
                 instance.quit()
-                game_over = True
             elif command == ('hit'): # Debug to test taking damage
                 instance.hit(player)
             elif command == ('pay'): # Debug to test losing gold
@@ -37,6 +36,10 @@ def game():
                     instance.rob(player)
             elif command == ('help'):
                 instance.help()
+            elif command == ('save'):
+                instance.save(player)
+            elif command == ('load'):
+                instance.load(player)
             else:
                 print ("That is not a valid command. Try again.")
                 game_over = False
