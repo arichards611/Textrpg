@@ -54,6 +54,6 @@ class commands(object):
         self.cmds = [] # Creates empty list, referring to self for this scope
         for x in dir(self): # for each entry of this directory
             if x[0] != "_" and x != 'cmds' and x != 'status': # If it doesn't begin with _, cmds, or status
-                cap = x[0].upper() + x[1:]
+                cap = x[0].upper() + x[1:] # Capitalizes the first letter, then finishes the word with lowercase
                 self.cmds.append(cap) # Add to the self.cmds list
         return self.cmds
