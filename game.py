@@ -2,6 +2,7 @@
 # game script
 
 from commands import commands
+from story import intro
 import os
 
 class character(object):
@@ -10,10 +11,26 @@ class character(object):
         self.gold = gold
         self.name = name
 
+    def remove_gold(self, amount):
+        #do stuff and checks for gold
+        if  self.gold > 0:
+            self.gold -= amount
+
+    def remove_health(self, amount):
+        if self.hp > 0:
+            self.hp -= amount
+        else:
+            game_over = True
+            return game_over
+
+def output(response):
+    for x in response:
+        print x
+
 def game():
     os.system('clear')
-    name = raw_input("Please enter your name: ")
-    print ("Hello {0} and thank you for playing. Here's 10 gold to start.").format(name)
+    startup = ""
+    name = intro(startup)
     player = character(10, 20, name)
     instance = commands()
     game_over = False
@@ -22,20 +39,21 @@ def game():
             print ("Oh no, you are dead. Game Over.")
             game_over = True
         else:
-            instance.status(player)
+            response =instance.status(player)
+            output(response)
             command = raw_input("Please enter a command: ")
             command = command.lower()
             if command == 'quit':
                 game_over = instance.quit()
             elif command == ('hit'): # Debug to test taking damage
-                instance.hit(player)
-            elif command == ('pay'): # Debug to test losing gold
-                if player.gold == 0:
-                    print ("You're broke.")
-                else:
-                    instance.rob(player)
+                response = instance.hit(player)
+                output(response)
+            elif command == ('rob'): # Debug to test losing gold
+                response = instance.rob(player)
+                output(response)
             elif command == ('help'):
-                instance.help()
+                response = instance.help()
+                output(response)
             elif command == ('save'):
                 instance.save(player)
             elif command == ('load'):
