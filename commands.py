@@ -8,7 +8,7 @@ class commands(object):
         confirm = raw_input("Are you sure you want to quit (Yes/No)? Make sure you save! ") # Input for quit
         confirm = confirm.lower() # Lowercases the string
         if confirm[0] == 'y': # Checks that first letter is Y, if yes
-            print "Game over"
+            print "Thanks for playing!"
             return True
         else: # If first letter is anything but Y
             return False
