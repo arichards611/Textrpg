@@ -14,7 +14,7 @@ def game():
     os.system('clear')
     startup = ""
     name = intro(startup)
-    player = characters.character(10, 20, name)
+    player = characters.character(20, 10, name)
     instance = commands()
     game_over = False
     while not game_over:
@@ -24,9 +24,9 @@ def game():
         else:
             response =instance.status(player)
             output(response)
-            command = raw_input("Please enter a command: ")
+            command = raw_input("Please enter a command or see commands with 'help': ")
             command = command.lower()
-            if command == 'quit':
+            if command == ('quit'):
                 game_over = instance.quit()
             elif command == ('hit'): # Debug to test taking damage
                 response = instance.hit(player)
@@ -41,6 +41,9 @@ def game():
                 instance.save(player)
             elif command == ('load'):
                 instance.load(player)
+            elif command == ('battle'):
+                enemy = characters.bonerfart(5, 3, "Bonerfart")
+                instance.battle(player,enemy)
             else:
                 print ("That is not a valid command. Try again.")
                 game_over = False

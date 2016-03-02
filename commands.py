@@ -1,6 +1,7 @@
 #commands class
 
 import json
+import random
 
 class commands(object):
 
@@ -18,6 +19,8 @@ class commands(object):
                 "Current HP: " + str(player.hp), "Current Gold: " + str(player.gold), # All these lines are in parenthesis
                 "*"*10) # This is the closing of the return
 
+# Test commands
+
     def hit(self, player):  # Same as above
         player.remove_health(5)
         return "You got hit.", "You have {0} health left.".format(player.hp) # Returns both lines as a list, for our output function
@@ -28,6 +31,8 @@ class commands(object):
             return "You payed up.", "You have {0} gold left.".format(player.gold) # Same as hit
         else:
             return "You're broke",
+
+# Saving, loading, help functions
 
     def save(self, player):
         filename = "./saves/{0}.txt".format(player.name) # Establishes the name of the save
@@ -52,8 +57,34 @@ class commands(object):
     def help(self):
         print ("The following commands are useable: ")
         self.cmds = [] # Creates empty list, referring to self for this scope
+        exclude = ["_", "cmds", "status", "hit", "rob"]
         for x in dir(self): # for each entry of this directory
-            if x[0] != "_" and x != 'cmds' and x != 'status': # If it doesn't begin with _, cmds, or status
+            if x[0] != "_" and x not in exclude: # If it doesn't begin with _, cmds, or status
                 cap = x[0].upper() + x[1:] # Capitalizes the first letter, then finishes the word with lowercase
                 self.cmds.append(cap) # Add to the self.cmds list
         return self.cmds
+
+# Fighting functions
+
+    def battle(self, player, enemy):
+        print "You've encountered an enemy!"
+        while player.hp > 0 and enemy.hp > 0:
+            l = raw_input("What do you do? (Fight/Run)")
+            choice = l.lower()
+            if choice == ("fight"):
+                damage = random.randint(0,5)
+                if damage == 0:
+                    print "You missed!"
+                else:
+                    enemy.remove_health(damage)
+                    print "You did {0} damage, the enemy has {1} health remaining".format(damage, enemy.hp)
+            elif choice == ("run"):
+                print "You ran away!"
+                return False
+            else:
+                print "You can only fight or run"
+        else:
+            if enemy.hp <= 0:
+                print "You win!"
+                player.gold += enemy.gold
+                return False
