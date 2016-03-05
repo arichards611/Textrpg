@@ -1,5 +1,6 @@
 #commands class
 
+from items import potion
 import json
 import random
 
@@ -15,9 +16,18 @@ class commands(object):
             return False
 
     def status(self, player): # Since we are using some of the character variables, we pass self, and player
-        return ("*"*10, str(player.name), "Status:", # This is one continuous return
-                "Current HP: " + str(player.hp), "Current Gold: " + str(player.gold), # All these lines are in parenthesis
-                "*"*10) # This is the closing of the return
+        msg = ("*"*10,
+                str(player.name),
+                "Status:",
+                "Current HP: " + str(player.hp),
+                "Current Gold: " + str(player.gold),
+                "Inventory: "+str(len(player.inv)),
+                "*"*10)
+        return msg
+
+    def enemy_status(self, enemy):
+        return ("*"*10, str(enemy.name), "Status:", "Current HP: " + str(enemy.hp),
+                "*"*10)
 
 # Test commands
 
@@ -32,6 +42,23 @@ class commands(object):
         else:
             return "You're broke",
 
+    def pot_add(self, player):
+        new_potion = potion(0, 10)
+        player.inv.append(new_potion)
+        return "Added 1 potion to inventory",
+
+    def use_item(self, player):
+        if len(player.inv) > 0:
+            p = player.inv[0]
+            p.use(player)
+            if p.used:
+                player.inv.remove(p)
+                return "You used a potion and recovered some hp.",
+            else:
+                return "You're at full health. Nothing happened.",
+        else:
+            return "You have no potions to use.",
+
 # Saving, loading, help functions
 
     def save(self, player):
@@ -43,7 +70,7 @@ class commands(object):
         data["gold"] = player.gold
         json.dump(data, f) # Dumps the data dictionary into f
         f.close() # Closes the file
-        print 'Game saved as {0}'.format(player.name)
+        return 'Game saved as {0}'.format(player.name)
 
     def load(self, player):
         filename = raw_input("Please enter the name of the save: ") # Asks which file to open, must know file name
@@ -53,11 +80,12 @@ class commands(object):
         player.hp = data["hp"]
         player.gold = data["gold"]
         f.close() # Close the file
+        return 'Game {0} loaded.'.format(player.name)
 
     def help(self):
         print ("The following commands are useable: ")
         self.cmds = [] # Creates empty list, referring to self for this scope
-        exclude = ["_", "cmds", "status", "hit", "rob"]
+        exclude = ["_", "cmds", "status", "hit", "rob", "pot_add" "use_item"]
         for x in dir(self): # for each entry of this directory
             if x[0] != "_" and x not in exclude: # If it doesn't begin with _, cmds, or status
                 cap = x[0].upper() + x[1:] # Capitalizes the first letter, then finishes the word with lowercase
@@ -67,7 +95,7 @@ class commands(object):
 # Fighting functions
 
     def battle(self, player, enemy):
-        print "You've encountered an enemy!"
+        print "You've encountered a {0}. It has {1} hp.".format(enemy.name, enemy.hp)
         while player.hp > 0 and enemy.hp > 0:
             l = raw_input("What do you do? (Fight/Run)")
             choice = l.lower()
@@ -77,6 +105,8 @@ class commands(object):
                     print "You missed!"
                 else:
                     enemy.remove_health(damage)
+                    if enemy.hp <= 0:
+                        enemy.hp = 0
                     print "You did {0} damage, the enemy has {1} health remaining".format(damage, enemy.hp)
             elif choice == ("run"):
                 print "You ran away!"
