@@ -108,6 +108,13 @@ class commands(object):
                     if enemy.hp <= 0:
                         enemy.hp = 0
                     print "You did {0} damage, the enemy has {1} health remaining".format(damage, enemy.hp)
+                if enemy.hp > 0:
+                    hurt = random.randint(0,5)
+                    if hurt == 0:
+                        print "The enemy {0} missed".format(enemy.name)
+                    else:
+                        player.remove_health(hurt)
+                        print "The enemy {0} attacked and did {1} damage. You have {2} health left.".format(enemy.name, hurt, player.hp)
             elif choice == ("run"):
                 print "You ran away!"
                 return False
