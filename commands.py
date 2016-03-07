@@ -10,8 +10,7 @@ class commands(object):
         confirm = raw_input("Are you sure you want to quit (Yes/No)? Make sure you save! ") # Input for quit
         confirm = confirm.lower() # Lowercases the string
         if confirm[0] == 'y': # Checks that first letter is Y, if yes
-            print "Thanks for playing!"
-            return True
+            return "Thanks for playing!", True
         else: # If first letter is anything but Y
             return False
 
@@ -85,7 +84,7 @@ class commands(object):
     def help(self):
         print ("The following commands are useable: ")
         self.cmds = [] # Creates empty list, referring to self for this scope
-        exclude = ["_", "cmds", "status", "hit", "rob", "pot_add" "use_item"]
+        exclude = ["cmds", "status", "hit", "rob", "pot_add", "use_item", "enemy_status"]
         for x in dir(self): # for each entry of this directory
             if x[0] != "_" and x not in exclude: # If it doesn't begin with _, cmds, or status
                 cap = x[0].upper() + x[1:] # Capitalizes the first letter, then finishes the word with lowercase

@@ -32,7 +32,7 @@ def game():
             command = command.lower()
 
             if command == ('quit'):
-                game_over = instance.quit()
+                response = instance.quit()
             elif command == ('hit'): # Debug to test taking damage
                 response = instance.hit(player)
             elif command == ('rob'): # Debug to test losing gold
