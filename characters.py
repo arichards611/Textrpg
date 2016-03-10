@@ -35,7 +35,7 @@ class character(object):
             game_over = True
             return game_over
 
-class bonerfart(object):
+class enemy(object):
     def __init__(self, hp, gold, name):
         self.gold = gold
         self.hp = hp
@@ -49,5 +49,3 @@ class bonerfart(object):
     def remove_health(self, amount):
         if self.hp > 0:
             self.hp -= amount
-
-    attacks = ["fight", "run"]

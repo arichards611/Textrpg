@@ -69,7 +69,7 @@ class commands(object):
         data["gold"] = player.gold
         json.dump(data, f) # Dumps the data dictionary into f
         f.close() # Closes the file
-        return 'Game saved as {0}'.format(player.name)
+        return "Game saved as {0}".format(player.name),
 
     def load(self, player):
         filename = raw_input("Please enter the name of the save: ") # Asks which file to open, must know file name
@@ -79,12 +79,12 @@ class commands(object):
         player.hp = data["hp"]
         player.gold = data["gold"]
         f.close() # Close the file
-        return 'Game {0} loaded.'.format(player.name)
+        return "Game {0} loaded.".format(player.name),
 
     def help(self):
         print ("The following commands are useable: ")
         self.cmds = [] # Creates empty list, referring to self for this scope
-        exclude = ["cmds", "status", "hit", "rob", "pot_add", "use_item", "enemy_status"]
+        exclude = ["cmds", "status", "hit", "rob", "pot_add", "use_item", "enemy_status", "enemy_attack", "player_attack"]
         for x in dir(self): # for each entry of this directory
             if x[0] != "_" and x not in exclude: # If it doesn't begin with _, cmds, or status
                 cap = x[0].upper() + x[1:] # Capitalizes the first letter, then finishes the word with lowercase
@@ -96,24 +96,16 @@ class commands(object):
     def battle(self, player, enemy):
         print "You've encountered a {0}. It has {1} hp.".format(enemy.name, enemy.hp)
         while player.hp > 0 and enemy.hp > 0:
-            l = raw_input("What do you do? (Fight/Run)")
+            l = raw_input("What do you do? (Fight/Use/Run)")
             choice = l.lower()
             if choice == ("fight"):
-                damage = random.randint(0,5)
-                if damage == 0:
-                    print "You missed!"
-                else:
-                    enemy.remove_health(damage)
-                    if enemy.hp <= 0:
-                        enemy.hp = 0
-                    print "You did {0} damage, the enemy has {1} health remaining".format(damage, enemy.hp)
-                if enemy.hp > 0:
-                    hurt = random.randint(0,5)
-                    if hurt == 0:
-                        print "The enemy {0} missed".format(enemy.name)
-                    else:
-                        player.remove_health(hurt)
-                        print "The enemy {0} attacked and did {1} damage. You have {2} health left.".format(enemy.name, hurt, player.hp)
+                playturn = commands.player_attack(self, player, enemy)
+                enemyturn = commands.enemy_attack(self, player, enemy)
+            elif choice == ("use"):
+                result = commands.use_item(self, player)
+                print str(result)
+                enemyturn = commands.enemy_attack(self,player,enemy)
+                print str(enemyturn)
             elif choice == ("run"):
                 print "You ran away!"
                 return False
@@ -121,6 +113,25 @@ class commands(object):
                 print "You can only fight or run"
         else:
             if enemy.hp <= 0:
-                print "You win!"
+                print "You win! The enemy {0} dropped {1} gold.".format(enemy.name, enemy.gold)
                 player.gold += enemy.gold
                 return False
+
+    def player_attack(self, player, enemy):
+            damage = random.randint(0,5)
+            if damage == 0:
+                print "You missed!"
+            else:
+                enemy.remove_health(damage)
+                if enemy.hp <= 0:
+                    enemy.hp = 0
+                print "You did {0} damage, the enemy has {1} health remaining".format(damage, enemy.hp)
+
+    def enemy_attack(self, player, enemy):
+        if enemy.hp > 0:
+            hurt = random.randint(0,5)
+            if hurt == 0:
+                print "The enemy {0} missed".format(enemy.name)
+            else:
+                player.remove_health(hurt)
+                print "The enemy {0} attacked and did {1} damage. You have {2} health left.".format(enemy.name, hurt, player.hp)

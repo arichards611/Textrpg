@@ -3,6 +3,7 @@
 
 from commands import commands
 from random import randint
+from random import choice
 from story import intro
 import characters
 import os
@@ -25,7 +26,7 @@ def game():
             print ("Oh no, you are dead. Game Over.")
             game_over = True
         else:
-            response = instance.status(player)
+            response = ""
             status = instance.status(player)
             output(status)
             command = raw_input("Please enter a command or see commands with 'help': ")
@@ -46,12 +47,14 @@ def game():
             elif command == ('save'):
                 response = instance.save(player)
             elif command == ('load'):
-                instance.load(player)
+                 response = instance.load(player)
             elif command == ('battle'):
-                enemy = characters.bonerfart(randint(3, 10), randint(0,5), "Bonerfart")
+                enemies = [characters.enemy(randint(3, 10), randint(0,5), "Bonerfart"),
+                characters.enemy(randint(10, 15), randint(5,10), "Scrub")]
+                enemy = choice(enemies)
                 instance.battle(player,enemy)
-                response = ""
             else:
                 response = ("That is not a valid command. Try again.",)
                 game_over = False
+
             output(response)
