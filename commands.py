@@ -6,11 +6,6 @@ import random
 
 class commands(object):
 
-    def output(response):
-        for x in response:
-            if len(str(x)) > 0:
-                print x
-
     def quit(self, game_over):
         confirm = raw_input("Are you sure you want to quit (Yes/No)? Make sure you save! ") # Input for quit
         end = confirm.lower() # Lowercases the string
