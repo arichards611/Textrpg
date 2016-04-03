@@ -4,7 +4,7 @@
 from commands import commands
 from random import randint
 from random import choice
-from story import intro
+import story
 import characters
 import os
 
@@ -13,16 +13,13 @@ def output(response):
         if len(str(x)) > 0:
             print x
 
-def game():
+def game(player):
     os.system('clear')
-    startup = ""
-    name = intro(startup)
-    player = characters.character(20, 10, [], name)
     instance = commands()
     game_over = False
 
     while not game_over:
-        if player.hp == 0:
+        if player.hp <= 0:
             print ("Oh no, you are dead. Game Over.")
             game_over = True
         else:
@@ -33,7 +30,8 @@ def game():
             command = command.lower()
 
             if command == ('quit'):
-                response = instance.quit()
+                if instance.quit(game_over) is True:
+                    game_over = True
             elif command == ('hit'): # Debug to test taking damage
                 response = instance.hit(player)
             elif command == ('rob'): # Debug to test losing gold

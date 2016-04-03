@@ -6,13 +6,21 @@ import random
 
 class commands(object):
 
-    def quit(self):
+    def output(response):
+        for x in response:
+            if len(str(x)) > 0:
+                print x
+
+    def quit(self, game_over):
         confirm = raw_input("Are you sure you want to quit (Yes/No)? Make sure you save! ") # Input for quit
-        confirm = confirm.lower() # Lowercases the string
-        if confirm[0] == 'y': # Checks that first letter is Y, if yes
-            return "Thanks for playing!", True
+        end = confirm.lower() # Lowercases the string
+        game_over = False
+        if end[0] == 'y': # Checks that first letter is Y, if yes
+            game_over = True
+            print "Thanks for playing!"
+            return game_over
         else: # If first letter is anything but Y
-            return False
+            return game_over
 
     def status(self, player): # Since we are using some of the character variables, we pass self, and player
         msg = ("*"*10,
@@ -25,8 +33,12 @@ class commands(object):
         return msg
 
     def enemy_status(self, enemy):
-        return ("*"*10, str(enemy.name), "Status:", "Current HP: " + str(enemy.hp),
+        msg = ("*"*10,
+                str(enemy.name),
+                "Status:",
+                "Current HP: " + str(enemy.hp),
                 "*"*10)
+        return msg
 
 # Test commands
 
@@ -95,22 +107,43 @@ class commands(object):
 
     def battle(self, player, enemy):
         print "You've encountered a {0}. It has {1} hp.".format(enemy.name, enemy.hp)
+        if player.hp <= 0:
+            game_over = True
+            return game_over
         while player.hp > 0 and enemy.hp > 0:
+            status = commands.status(self, player)
+            for line in status:
+                print line
             l = raw_input("What do you do? (Fight/Use/Run)")
+            print ""
             choice = l.lower()
             if choice == ("fight"):
                 playturn = commands.player_attack(self, player, enemy)
+                print ""
                 enemyturn = commands.enemy_attack(self, player, enemy)
+                print ""
             elif choice == ("use"):
                 result = commands.use_item(self, player)
+                print ""
                 print str(result)
+                print ""
                 enemyturn = commands.enemy_attack(self,player,enemy)
+                print ""
                 print str(enemyturn)
+                print ""
             elif choice == ("run"):
-                print "You ran away!"
-                return False
+                escape = random.randint(0,10)
+                if escape >= 4:
+                    print ""
+                    print "You ran away!"
+                    return False
+                else:
+                    print ""
+                    print "You failed to run away"
+                    print ""
+                    enemyturn = commands.enemy_attack(self, player, enemy)
             else:
-                print "You can only fight or run"
+                print "You can only fight, use or run"
         else:
             if enemy.hp <= 0:
                 print "You win! The enemy {0} dropped {1} gold.".format(enemy.name, enemy.gold)
@@ -134,4 +167,4 @@ class commands(object):
                 print "The enemy {0} missed".format(enemy.name)
             else:
                 player.remove_health(hurt)
-                print "The enemy {0} attacked and did {1} damage. You have {2} health left.".format(enemy.name, hurt, player.hp)
+                print "The enemy {0} attacked and did {1} damage.".format(enemy.name, hurt, player.hp)
