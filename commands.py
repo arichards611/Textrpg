@@ -49,21 +49,43 @@ class commands(object):
             return "You're broke",
 
     def pot_add(self, player):
-        new_potion = potion(0, 10)
-        player.inv.append(new_potion)
-        return "Added 1 potion to inventory",
-
-    def use_item(self, player):
-        if len(player.inv) > 0:
-            p = player.inv[0]
-            p.use(player)
-            if p.used:
-                player.inv.remove(p)
-                return "You used a potion and recovered some hp.",
-            else:
-                return "You're at full health. Nothing happened.",
+        item = potion(10, "Potion") #debug
+        if player.inv.get(item.name):
+            player.inv[item.name] += 1
         else:
-            return "You have no potions to use.",
+            player.inv[item.name] = 1
+        return "Added 1 potion to inventory", player.inv.keys(),
+
+    def use_item(self, player, choice):
+        remove = player.inv
+        for x in remove:
+            item = x.lower()
+            if choice == item:
+                if remove[x] >= 1:
+                    remove[x] -= 1
+                    print "You have used one {0}".format(item)
+            else:
+                print "You entered an invalid item name."
+                return False
+        if player.inv[x] <= 0:
+            del player.inv[x]
+
+    def inv(self, player):
+        if len(player.inv) > 0:
+            print ""
+            for item in player.inv:
+                stack = str(player.inv.keys()) + " x" + str(player.inv.values())
+                print stack
+            print ""
+            choice = raw_input("What item would you like to use? (""Back"" to cancel): ")
+            choice = choice.lower()
+            if choice == ('back'):
+                return False
+            else:
+                commands.use_item(self, player, choice)
+        else:
+            print "You have no items in your inventory."
+
 
 # Saving, loading, help functions
 

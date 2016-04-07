@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # game script
 
+from items import potion
 from commands import commands
 from random import randint
 from random import choice
@@ -36,8 +37,10 @@ def game(player):
                 response = instance.hit(player)
             elif command == ('rob'): # Debug to test losing gold
                 response = instance.rob(player)
-            elif command == ('pot'):
+            elif command == ('pot'): #Debug to add potion
                 response = instance.pot_add(player)
+            elif command == ('inv'):
+                invmenu = instance.inv(player)
             elif command == ('use'):
                 response = instance.use_item(player)
             elif command == ('help'):
