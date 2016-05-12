@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # game script
 
-from items import potion
+from items import consumable
 from commands import commands
 from random import randint
 from random import choice
@@ -38,7 +38,9 @@ def game(player):
             elif command == ('rob'): # Debug to test losing gold
                 response = instance.rob(player)
             elif command == ('pot'): #Debug to add potion
-                response = instance.pot_add(player)
+                response = instance.potion_add(player)
+            elif command == ('shop'):
+                shopmenu = instance.shop(player)
             elif command == ('inv'):
                 invmenu = instance.inv(player)
             elif command == ('use'):

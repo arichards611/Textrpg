@@ -1,6 +1,6 @@
 #commands class
 
-from items import potion
+import items
 import json
 import random
 
@@ -23,7 +23,6 @@ class commands(object):
                 "Status:",
                 "Current HP: " + str(player.hp),
                 "Current Gold: " + str(player.gold),
-                "Inventory: "+str(len(player.inv)),
                 "*"*10)
         return msg
 
@@ -48,34 +47,34 @@ class commands(object):
         else:
             return "You're broke",
 
-    def pot_add(self, player):
-        item = potion(10, "Potion") #debug
-        if player.inv.get(item.name):
-            player.inv[item.name] += 1
+    def potion_add(self, player):
+        potion = items.consumable('Potion', 1, 10, 10)
+        name = player.inv.items.keys()
+        if potion.name in name:
+            print player.inv
         else:
-            player.inv[item.name] = 1
-        return "Added 1 potion to inventory", player.inv.keys(),
+            player.inv.add_item(potion)
+        return "Added 1 potion to inventory",
 
     def use_item(self, player, choice):
-        remove = player.inv
-        for x in remove:
-            item = x.lower()
-            if choice == item:
-                if remove[x] >= 1:
-                    remove[x] -= 1
-                    print "You have used one {0}".format(item)
+        for x in player.inv:
+            x.name = x.name.lower()
+            if choice == x.name:
+                if x.count >= 2:
+                    x.count -= 1
+                    print "You have used one {0}".format(x.name)
+                else:
+                    player.inv.remove(x)
+                if choice == ('potion'):
+                    item.use(x, player)
             else:
                 print "You entered an invalid item name."
                 return False
-        if player.inv[x] <= 0:
-            del player.inv[x]
 
     def inv(self, player):
-        if len(player.inv) > 0:
+        if player.inv != {}:
             print ""
-            for item in player.inv:
-                stack = str(player.inv.keys()) + " x" + str(player.inv.values())
-                print stack
+            print player.inv
             print ""
             choice = raw_input("What item would you like to use? (""Back"" to cancel): ")
             choice = choice.lower()
@@ -88,6 +87,24 @@ class commands(object):
 
 
 # Saving, loading, help functions
+
+    def shop(self, player):
+        print "Welcome. What would you like to do? [Buy, Sell, Exit]"
+        option = raw_input()
+        option = option.lower()
+        if option == "buy":
+            shopinv = ["potion"]
+            print ("Items for sale are: {0}").format(shopinv)
+            buytem = raw_input("What would you like to buy?: ")
+            buytem = buytem.lower()
+            if buytem == ('potion'):
+                commands.potion_add(self, player)
+
+        elif option == "sell":
+            pass
+        else:
+            "That is not a valid choice."
+            commands.shop(self, player)
 
     def save(self, player):
         filename = "./saves/{0}.txt".format(player.name) # Establishes the name of the save

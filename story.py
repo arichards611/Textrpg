@@ -10,7 +10,7 @@ instance = commands()
 
 def startup():
     os.system('clear')
-    player = characters.character(20, 10, {}, "")
+    player = characters.character(20, 10, [], "")
     while player.name == "":
         s = raw_input("What would you like to do? New/Load: ")
         choice = s.lower()
@@ -33,6 +33,6 @@ def intro(newchar):
             print ("Hello {0} and thank you for playing. Here's 10 gold to start.").format(name)
             return name
         else:
-            print ("Names can only contain characters. Try again.")
+            print ("Names can only contain letters. Try again.")
             name = ""
     return name

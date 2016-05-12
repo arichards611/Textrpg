@@ -1,11 +1,13 @@
 #Characters other than the main character
 
+from items import inventory
+
 class character(object):
     def __init__(self, hp, gold, inv, name):
         self.gold = gold
         self.hp = hp
         self.name = name
-        self.inv = inv
+        self.inv = inventory()
         self.max_hp = 20
         self.armor = 0
 
@@ -37,8 +39,8 @@ class character(object):
 
 class enemy(object):
     def __init__(self, hp, gold, name):
-        self.gold = gold
         self.hp = hp
+        self.gold = gold
         self.name = name
 
     def remove_gold(self, amount):
