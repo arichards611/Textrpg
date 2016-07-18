@@ -25,4 +25,9 @@ class inventory(object):
         return out
 
     def add_item(self, item):
-        self.items[item.name] = item
+        self.items[item.name, item.count, item.cost] = item
+        for x in self.items:
+            if item == x:
+                item.count +1
+            else:
+                print "Added 1 {0} to inventory.".format(item.name)

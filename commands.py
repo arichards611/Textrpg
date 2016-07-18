@@ -49,30 +49,15 @@ class commands(object):
 
     def potion_add(self, player):
         potion = items.consumable('Potion', 1, 10, 10)
-        name = player.inv.items.keys()
-        if potion.name in name:
-            print player.inv
-        else:
-            player.inv.add_item(potion)
+        player.inv.add_item(potion)
         return "Added 1 potion to inventory",
 
     def use_item(self, player, choice):
-        for x in player.inv:
-            x.name = x.name.lower()
-            if choice == x.name:
-                if x.count >= 2:
-                    x.count -= 1
-                    print "You have used one {0}".format(x.name)
-                else:
-                    player.inv.remove(x)
-                if choice == ('potion'):
-                    item.use(x, player)
-            else:
-                print "You entered an invalid item name."
-                return False
+        print player.inv
+        print player.inv.items
 
     def inv(self, player):
-        if player.inv != {}:
+        if len(player.inv.items) >= 1:
             print ""
             print player.inv
             print ""
