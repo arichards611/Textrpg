@@ -1,6 +1,6 @@
 #Characters other than the main character
 
-from items import inventory
+from inventory import inventory
 
 class character(object):
     def __init__(self, hp, gold, inv, name):

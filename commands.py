@@ -6,17 +6,6 @@ import random
 
 class commands(object):
 
-    def quit(self, game_over):
-        confirm = raw_input("Are you sure you want to quit (Yes/No)? Make sure you save! ") # Input for quit
-        end = confirm.lower() # Lowercases the string
-        game_over = False
-        if end[0] == 'y': # Checks that first letter is Y, if yes
-            game_over = True
-            print "Thanks for playing!"
-            return game_over
-        else: # If first letter is anything but Y
-            return game_over
-
     def status(self, player): # Since we are using some of the character variables, we pass self, and player
         msg = ("*"*10,
                 str(player.name),
@@ -46,25 +35,6 @@ class commands(object):
             return "You payed up.", "You have {0} gold left.".format(player.gold) # Same as hit
         else:
             return "You're broke",
-
-    def potion_add(self, player):
-        potion = items.consumable('Potion', 1, 10, 10)
-        player.inv.add_item(potion)
-        return "Added 1 potion to inventory",
-
-    def inv(self, player):
-        if player.inv != []:
-            print ""
-            print player.inv
-            print ""
-            choice = raw_input("What item would you like to use? (""Back"" to cancel): ")
-            choice = choice.lower()
-            if choice == ('back'):
-                return False
-            else:
-                player.inv.remove_item(choice)
-        else:
-            print "You have no items in your inventory."
 
 # Saving, loading, help functions
 
