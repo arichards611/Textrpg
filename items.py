@@ -8,11 +8,10 @@ class consumable(object):
         self.heal = heal
         self.cost = cost
 
-    def use(player, item):
-        if item == ('potion'):
-            if player.hp < player.max_hp:
-                player.add_health(self.heal)
-
+    def use_cons(self, player, choice):
+        if player.hp < player.max_hp:
+            player.add_health(self.heal)
+        player.items.remove(choice)
 
 class inventory(object):
     def __init__(self):
@@ -25,10 +24,18 @@ class inventory(object):
         return out
 
     def add_item(player, newitem):
-        print newitem
+        if player.items == []:
+            player.items.append(newitem)
+            return player.items
         for item in player.items:
             if item.name == newitem.name:
                 item.count +=1
-            else:
-                player.items.append(item)
-                print "added"
+                return player.items
+
+    def remove_item(player, choice):
+        for item in player.items:
+            if item.name.lower() == choice:
+                if item.count > 1:
+                    item.count -= 1
+                else:
+                    player.items.remove(item)

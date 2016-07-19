@@ -52,10 +52,6 @@ class commands(object):
         player.inv.add_item(potion)
         return "Added 1 potion to inventory",
 
-    def use_item(self, player, choice):
-        print player.inv
-        print player.inv.items
-
     def inv(self, player):
         if player.inv != []:
             print ""
@@ -66,10 +62,9 @@ class commands(object):
             if choice == ('back'):
                 return False
             else:
-                commands.use_item(self, player, choice)
+                player.inv.remove_item(choice)
         else:
             print "You have no items in your inventory."
-
 
 # Saving, loading, help functions
 
