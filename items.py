@@ -16,18 +16,19 @@ class consumable(object):
 
 class inventory(object):
     def __init__(self):
-        self.items = {}
+        self.items = []
 
-    def __str__(self):
+    def __str__(player):
         out = '\t'.join(['Name', 'Count', 'Cost'])
-        for item in self.items.values():
+        for item in player.items:
             out += '\n' + '\t'.join([str(x) for x in [item.name, item.count, item.cost]])
         return out
 
-    def add_item(self, item):
-        self.items[item.name, item.count, item.cost] = item
-        for x in self.items:
-            if item == x:
-                item.count +1
+    def add_item(player, newitem):
+        print newitem
+        for item in player.items:
+            if item.name == newitem.name:
+                item.count +=1
             else:
-                print "Added 1 {0} to inventory.".format(item.name)
+                player.items.append(item)
+                print "added"

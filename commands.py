@@ -57,7 +57,7 @@ class commands(object):
         print player.inv.items
 
     def inv(self, player):
-        if len(player.inv.items) >= 1:
+        if player.inv != []:
             print ""
             print player.inv
             print ""
