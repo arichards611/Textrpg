@@ -7,7 +7,5 @@ class potion(object):
 
     def execute(self):
         potion = items.consumable('Potion', 1, 10, 10)
-        print "im in potion"
-        print self.engine.player.name
         self.engine.player.inv.add_item(potion)
         print "Added 1 potion to inventory"
