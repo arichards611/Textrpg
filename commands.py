@@ -23,38 +23,7 @@ class commands(object):
                 "*"*10)
         return msg
 
-# Test commands
-
-    def hit(self, player):  # Same as above
-        player.remove_health(5)
-        return "You got hit.", "You have {0} health left.".format(player.hp) # Returns both lines as a list, for our output function
-
-    def rob(self, player): # and again
-        if player.gold > 0:
-            player.remove_gold(5)
-            return "You payed up.", "You have {0} gold left.".format(player.gold) # Same as hit
-        else:
-            return "You're broke",
-
 # Saving, loading, help functions
-
-    def shop(self, player):
-        print "Welcome. What would you like to do? [Buy, Sell, Exit]"
-        option = raw_input()
-        option = option.lower()
-        if option == "buy":
-            shopinv = ["potion"]
-            print ("Items for sale are: {0}").format(shopinv)
-            buytem = raw_input("What would you like to buy?: ")
-            buytem = buytem.lower()
-            if buytem == ('potion'):
-                commands.potion_add(self, player)
-
-        elif option == "sell":
-            pass
-        else:
-            "That is not a valid choice."
-            commands.shop(self, player)
 
     def save(self, player):
         filename = "./saves/{0}.txt".format(player.name) # Establishes the name of the save
@@ -90,49 +59,51 @@ class commands(object):
 # Fighting functions
 
     def battle(self, player, enemy):
-        print "You've encountered a {0}. It has {1} hp.".format(enemy.name, enemy.hp)
-        if player.hp <= 0:
-            game_over = True
-            return game_over
-        while player.hp > 0 and enemy.hp > 0:
-            status = commands.status(self, player)
-            for line in status:
-                print line
-            l = raw_input("What do you do? (Fight/Use/Run)")
-            print ""
-            choice = l.lower()
-            if choice == ("fight"):
-                playturn = commands.player_attack(self, player, enemy)
+        battle = True
+        while battle:
+            print "You've encountered a {0}. It has {1} hp.".format(enemy.name, enemy.hp)
+            while player.hp > 0 and enemy.hp > 0:
+                status = commands.status(self, player)
+                for line in status:
+                    print line
+                l = raw_input("What do you do? (Fight/Use/Run)")
                 print ""
-                enemyturn = commands.enemy_attack(self, player, enemy)
-                print ""
-            elif choice == ("use"):
-                result = commands.use_item(self, player)
-                print ""
-                print str(result)
-                print ""
-                enemyturn = commands.enemy_attack(self,player,enemy)
-                print ""
-                print str(enemyturn)
-                print ""
-            elif choice == ("run"):
-                escape = random.randint(0,10)
-                if escape >= 4:
-                    print ""
-                    print "You ran away!"
-                    return False
-                else:
-                    print ""
-                    print "You failed to run away"
+                choice = l.lower()
+                if choice == ("fight"):
+                    playturn = commands.player_attack(self, player, enemy)
                     print ""
                     enemyturn = commands.enemy_attack(self, player, enemy)
+                    print ""
+                elif choice == ("use"):
+                    result = commands.use_item(self, player)
+                    print ""
+                    print str(result)
+                    print ""
+                    enemyturn = commands.enemy_attack(self,player,enemy)
+                    print ""
+                    print str(enemyturn)
+                    print ""
+                elif choice == ("run"):
+                    escape = random.randint(0,10)
+                    if escape >= 4:
+                        print ""
+                        print "You ran away!"
+                        battle = False
+                    else:
+                        print ""
+                        print "You failed to run away"
+                        print ""
+                        enemyturn = commands.enemy_attack(self, player, enemy)
+                else:
+                    print "You can only fight, use or run"
             else:
-                print "You can only fight, use or run"
-        else:
-            if enemy.hp <= 0:
-                print "You win! The enemy {0} dropped {1} gold.".format(enemy.name, enemy.gold)
-                player.gold += enemy.gold
-                return False
+                if enemy.hp <= 0:
+                    print "You win! The enemy {0} dropped {1} gold.".format(enemy.name, enemy.gold)
+                    self.engine.player.add_gold(enemy.gold)
+                    battle = False
+                if player.hp <= 0:
+                    game_over = True
+                    return game_over
 
     def player_attack(self, player, enemy):
             damage = random.randint(0,5)

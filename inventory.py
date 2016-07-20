@@ -15,11 +15,10 @@ class inventory(object):
     def add_item(player, newitem):
         if player.items == []:
             player.items.append(newitem)
-            return player.items
-        for item in player.items:
-            if item.name == newitem.name:
-                item.count +=1
-                return player.items
+        else:
+            for item in player.items:
+                if item.name == newitem.name:
+                    item.count +=1
 
     def remove_item(player, choice):
         for item in player.items:

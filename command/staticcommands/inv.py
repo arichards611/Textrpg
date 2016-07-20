@@ -4,7 +4,7 @@ class inv(object):
         self.engine = engine
 
     def execute(self):
-        if self.engine.player.inv != []:
+        if self.engine.player.inv.items != []:
             print ""
             print self.engine.player.inv
             print ""

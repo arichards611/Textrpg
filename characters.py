@@ -2,7 +2,7 @@
 
 from inventory import inventory
 
-class character(object):
+class player(object):
     def __init__(self, hp, gold, inv, name):
         self.gold = gold
         self.hp = hp
@@ -30,10 +30,13 @@ class character(object):
         if  self.gold > 0:
             self.gold -= amount
 
+    def add_gold(self, amount):
+        self.gold += amount
+
     def remove_health(self, amount):
         if self.hp > 0:
             self.hp -= amount
-        else:
+        elif self.hp <= 0:
             game_over = True
             return game_over
 

@@ -1,4 +1,7 @@
 from staticcommands import *
+import characters
+from random import randint
+from random import choice
 
 class cmdfactory(object):
     def factory(command, engine):
@@ -6,17 +9,13 @@ class cmdfactory(object):
         if command == ('quit'):
             the_command = quit.quit()
         elif command == ('hit'):  # Debug to test taking damage
-            #todo
-            return
+            the_command = hit.hit(engine)
         elif command == ('rob'):  # Debug to test losing gold
-            #todo
-            return
+            the_command = rob.rob(engine)
         elif command == ('pot'):  # Debug to add potion
-            print ("{0} being called").format(command)
             the_command = potion.potion(engine)
         elif command == ('shop'):
-            #todo
-            return
+            the_command = shop.shop(engine)
         elif command == ('inv'):
             the_command = inv.inv(engine)
         elif command == ('help'):
@@ -29,8 +28,8 @@ class cmdfactory(object):
             #todo
             return
         elif command == ('battle'):
-            #todo
-            return
+
+            the_command = battle.battle(engine)
         else:
             response = ("That is not a valid command. Try again.",)
         the_command.execute()
