@@ -27,7 +27,6 @@ class inventory(object):
 
     def remove_item(self, newitem):
         for item in self.items:
-            print newitem.name
             if item.name == newitem.name:
                 if item.count > 1:
                     item.count -= 1
