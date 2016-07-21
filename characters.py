@@ -11,9 +11,9 @@ class player(object):
         self.max_hp = 20
         self.armor = 0
 
-    def add_health(self):
+    def add_health(self, amount):
         if self.hp >= self.max_hp:
-            return False
+            print "You are at full health."
         else:
             if self.hp < self.max_hp:
                 amount = self.max_hp - self.hp
@@ -48,6 +48,12 @@ class player(object):
                "Current Gold: " + str(self.gold),
                "*" * 10)
         return msg
+
+    def use_cons(self, cons):
+        if cons.name.lower() == 'potion':  # Other consumables will be added later
+            if self.hp < self.max_hp:
+                self.add_health(cons.heal)
+        self.inv.remove_item(cons)
 
 class enemy(object):
     def __init__(self, hp, gold, name):

@@ -1,5 +1,3 @@
-import items
-
 class inv(object):
 
     def __init__(self, assetContainer):
@@ -15,6 +13,7 @@ class inv(object):
             if choice == ('back'):
                 return False
             elif choice == ('potion'):
-                items.consumable.use_cons(self, choice)
+                cons = self.assetContainer.player.inv.get_item(choice)
+                self.assetContainer.player.use_cons(cons)
         else:
             print "You have no items in your inventory."

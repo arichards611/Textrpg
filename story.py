@@ -3,12 +3,13 @@
 import os
 import characters
 import game
+import json
 from assets import *
+from command import cmdfactory
 
 def startup():
     os.system('clear')
     player = characters.player(20, 10, [], "")
-
     while player.name == "":
         s = raw_input("What would you like to do? New/Load: ")
         choice = s.lower()
@@ -18,7 +19,7 @@ def startup():
             the_assetContainer = assetContainer.assetContainer(player)
             game.game(the_assetContainer)
         elif choice == "load":
-            instance.load(player)
+            cmdfactory.cmdfactory.factory(choice, player)
             the_assetContainer = assetContainer.assetContainer(player)
             game.game(the_assetContainer)
         else:
