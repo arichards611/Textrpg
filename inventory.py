@@ -1,12 +1,10 @@
-#Inventory
-
-import items
+#Inventory, these are functions for handling the players inventory. Adding/removing items and displaying inventory.
 
 class inventory(object):
     def __init__(self):
         self.items = []
 
-    def __str__(player):
+    def __str__(player): # Prints out inventory items in a nice neat charts
         out = '\t'.join(['Name', 'Count', 'Cost'])
         for item in player.items:
             out += '\n' + '\t'.join([str(x) for x in [item.name, item.count, item.cost]])

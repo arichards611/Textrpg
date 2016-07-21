@@ -1,37 +1,25 @@
 from staticcommands import *
-import characters
-from random import randint
-from random import choice
 
-class cmdfactory(object):
-    def factory(command, engine):
+class cmdfactory(object): # This will take in the player's command, and execute it from the command's file in staticcommands
+
+    def factory(command, assetContainer): #Takes in the player's command, as well as assetContainer, which contains all player data to pass to each command.
         the_command = None
         if command == ('quit'):
             the_command = quit.quit()
-        elif command == ('hit'):  # Debug to test taking damage
-            the_command = hit.hit(engine)
-        elif command == ('rob'):  # Debug to test losing gold
-            the_command = rob.rob(engine)
-        elif command == ('pot'):  # Debug to add potion
-            the_command = potion.potion(engine)
         elif command == ('shop'):
-            the_command = shop.shop(engine)
+            the_command = shop.shop(assetContainer)
         elif command == ('inv'):
-            the_command = inv.inv(engine)
+            the_command = inv.inv(assetContainer)
         elif command == ('help'):
-            #todo
-            return
+            the_command = help.help()
         elif command == ('save'):
-            #todo
-            return
+            the_command = save.save(assetContainer)
         elif command == ('load'):
-            #todo
-            return
+            the_command = load.load(assetContainer)
         elif command == ('battle'):
-
-            the_command = battle.battle(engine)
+            the_command = battle.battle(assetContainer)
         else:
-            response = ("That is not a valid command. Try again.",)
+            the_command = error.error(assetContainer)
         the_command.execute()
 
     factory = staticmethod(factory)

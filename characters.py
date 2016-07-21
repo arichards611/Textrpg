@@ -40,6 +40,15 @@ class player(object):
             game_over = True
             return game_over
 
+    def get_status(self):  # Since we are using some of the character variables, we pass self, and player
+        msg = ("*" * 10,
+               str(self.name),
+               "Status:",
+               "Current HP: " + str(self.hp),
+               "Current Gold: " + str(self.gold),
+               "*" * 10)
+        return msg
+
 class enemy(object):
     def __init__(self, hp, gold, name):
         self.hp = hp
@@ -54,3 +63,11 @@ class enemy(object):
     def remove_health(self, amount):
         if self.hp > 0:
             self.hp -= amount
+
+    def get_status(self):
+        msg = ("*" * 10,
+               str(self.name),
+               "Status:",
+               "Current HP: " + str(self.hp),
+               "*" * 10)
+        return msg

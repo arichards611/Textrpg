@@ -1,18 +1,20 @@
+import items
+
 class inv(object):
 
-    def __init__(self, engine):
-        self.engine = engine
+    def __init__(self, assetContainer):
+        self.assetContainer = assetContainer
 
-    def execute(self):
-        if self.engine.player.inv.items != []:
+    def execute(self): # This brings up the inventory MENU for the player. Not to be confused with player's inventory
+        if self.assetContainer.player.inv.items != []: #If player's inv.items is blank (this IS iterable!)
             print ""
-            print self.engine.player.inv
+            print self.assetContainer.player.inv
             print ""
             choice = raw_input("What item would you like to use? (""Back"" to cancel): ")
             choice = choice.lower()
             if choice == ('back'):
                 return False
-            else:
-                self.engine.player.inv.remove_item(choice)
+            elif choice == ('potion'):
+                items.consumable.use_cons(self, choice)
         else:
             print "You have no items in your inventory."

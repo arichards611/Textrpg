@@ -1,14 +1,9 @@
 #intro
 
 import os
-from commands import commands
 import characters
 import game
-import json
 from assets import *
-
-
-instance = commands()
 
 def startup():
     os.system('clear')
@@ -20,12 +15,12 @@ def startup():
         if choice == "new":
             player.name = intro(player)
             print player.name
-            the_engine = engine.engine(player)
-            game.game(the_engine)
+            the_assetContainer = assetContainer.assetContainer(player)
+            game.game(the_assetContainer)
         elif choice == "load":
             instance.load(player)
-            the_engine = engine.engine(player)
-            game.game(the_engine)
+            the_assetContainer = assetContainer.assetContainer(player)
+            game.game(the_assetContainer)
         else:
             print "That is not a valid command."
 
