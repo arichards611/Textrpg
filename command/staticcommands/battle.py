@@ -8,8 +8,8 @@ class battle(object):
         self.assetContainer = assetContainer
 
     def execute(self):
-        enemies = [characters.enemy(random.randint(3, 10), random.randint(0, 5), "Weakling"),
-                   characters.enemy(random.randint(10, 15), random.randint(5, 10), "Scrub")]
+        enemies = [characters.enemy("Weakling", random.randint(3, 10), random.randint(0, 5), 10),
+                   characters.enemy("Strongling", random.randint(10, 15), random.randint(5, 10), 25)]
         enemy = random.choice(enemies)
         print "You've encountered a {0}. It has {1} hp.".format(enemy.name, enemy.hp)
         while self.assetContainer.player.hp > 0 and enemy.hp > 0:
@@ -25,14 +25,14 @@ class battle(object):
                 self.enemy_attack(enemy)
                 print ""
             elif choice == ("use"):
-                pass
+                pass #TODO ADD USE OF ITEMS OR AT LEAST POTIONS
                 enemyturn = self.enemy_attack(enemy)
                 print ""
                 print str(enemyturn)
                 print ""
             elif choice == ("run"):
                 escape = random.randint(0, 10)
-                if escape >= 4:
+                if escape >= 2:
                     print ""
                     print "You ran away!"
                     return
@@ -45,16 +45,18 @@ class battle(object):
                 print "You can only fight, use or run"
         else:
             if enemy.hp <= 0:
-                print "You win! The enemy {0} dropped {1} gold.".format(enemy.name, enemy.gold)
+                print "You win! You gained {0} XP. The enemy {1} dropped {2} gold.".format(enemy.xp, enemy.name, enemy.gold)
                 self.assetContainer.player.add_gold(enemy.gold)
+                self.assetContainer.player.xp_up(enemy.xp)
                 return
             if self.assetContainer.player.hp <= 0:
                 print "You died. Game over."
                 sys.exit()
 
     def player_attack(self, enemy):
-        damage = random.randint(0, 5)
-        if damage == 0:
+        damage = self.assetContainer.player.attack + random.randint(1,3)
+        miss = random.randint(0,10)
+        if miss <= 2:
             print "You missed!"
         else:
             enemy.remove_health(damage)
@@ -64,7 +66,7 @@ class battle(object):
 
     def enemy_attack(self, enemy):
         if enemy.hp > 0:
-            hurt = random.randint(0, 5)
+            hurt = random.randint(0, 3)
             if hurt == 0:
                 print "The enemy {0} missed".format(enemy.name)
             else:

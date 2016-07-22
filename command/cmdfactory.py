@@ -18,6 +18,8 @@ class cmdfactory(object): # This will take in the player's command, and execute 
             the_command = load.load(assetContainer)
         elif command == ('battle'):
             the_command = battle.battle(assetContainer)
+        elif command == ('xp'):
+            the_command = xp.xp(assetContainer)
         else:
             the_command = error.error(assetContainer)
         the_command.execute()
