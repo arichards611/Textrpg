@@ -1,6 +1,7 @@
 import characters
 import random
 import sys
+import command
 
 class battle(object):
 
@@ -25,7 +26,7 @@ class battle(object):
                 self.enemy_attack(enemy)
                 print ""
             elif choice == ("use"):
-                pass #TODO ADD USE OF ITEMS OR AT LEAST POTIONS
+                command.cmdfactory.cmdfactory.factory("inv", self.assetContainer)
                 enemyturn = self.enemy_attack(enemy)
                 print ""
                 print str(enemyturn)
