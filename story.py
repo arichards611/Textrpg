@@ -1,26 +1,27 @@
 #intro
 
 import os
-from commands import commands
 import characters
 import game
 import json
-
-instance = commands()
+from assets import *
+from command import cmdfactory
 
 def startup():
     os.system('clear')
-    player = characters.character(20, 10, [], "")
+    player = characters.player(20, 10, [], "")
     while player.name == "":
         s = raw_input("What would you like to do? New/Load: ")
         choice = s.lower()
         if choice == "new":
             player.name = intro(player)
             print player.name
-            game.game(player)
+            the_assetContainer = assetContainer.assetContainer(player)
+            game.game(the_assetContainer)
         elif choice == "load":
-            instance.load(player)
-            game.game(player)
+            cmdfactory.cmdfactory.factory(choice, player)
+            the_assetContainer = assetContainer.assetContainer(player)
+            game.game(the_assetContainer)
         else:
             print "That is not a valid command."
 
