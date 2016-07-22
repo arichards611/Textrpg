@@ -22,15 +22,14 @@ class shop(object):
                     if quantity.isalnum():
                         if quantity >= "1":
                             cost = potion.cost * int(quantity)
-                            count = potion.count * int(quantity)
                             if self.assetContainer.player.gold < cost:
                                 print "You don't have enough gold to buy that!"
                             else:
-                                while current < count:
+                                while current < int(quantity):
                                     self.assetContainer.player.inv.add_item(potion)
                                     current += 1
                                 self.assetContainer.player.remove_gold(cost)
-                                print "You bought {0} {1} for {2} gold.".format(count, potion.name, cost)
+                                print "You bought {0} {1} for {2} gold.".format(quantity, potion.name, cost)
                         else:
                             print "You can't buy 0 of an item."
                     else:
