@@ -53,7 +53,7 @@ class playertest(unittest.TestCase):
         self.assertGreater(testPlayer.speed, 5)
 
     def test_use_cons(self):
-        testPlayer = player(10, 10, [], "test");
+        testPlayer = player(10, 10, [], "test")
         potion = consumable('Potion', 1, 10, 10)
         testPlayer.inv.add_item(potion)
         self.assertEquals(testPlayer.inv.get_item('Potion'), potion)
@@ -64,14 +64,25 @@ class playertest(unittest.TestCase):
 
 class enemytest(unittest.TestCase):
 
-    def test_add_health(self):
-        return
+    def test_remove_health(self):
+        testEnemy = enemy("test", 10, 10, 10)
+        testEnemy.remove_health(5)
+        self.assertEquals(testEnemy.hp, 5)
 
     def test_remove_gold(self):
-        return
+        testEnemy = enemy("test", 10, 10, 10)
+        testEnemy.remove_gold(5)
+        self.assertEquals(testEnemy.gold, 5)
 
     def test_get_status(self):
-        return
+        testEnemy = enemy("test", 10, 10, 10)
+        expected = ("*" * 10,
+               "test",
+               "Status:",
+               "Current HP: " + str(10),
+               "*" * 10)
+        actual = testEnemy.get_status()
+        self.assertEquals(actual, expected)
 
 if __name__ == '__main__':
     unittest.main()
