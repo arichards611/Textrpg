@@ -13,7 +13,6 @@ class playertest(unittest.TestCase):
         # Can't really test this
         return
 
-
     def test_remove_gold(self):
         testPlayer = player(10, 10, [], "test");
         testPlayer.remove_gold(5)
@@ -60,7 +59,6 @@ class playertest(unittest.TestCase):
         testPlayer.use_cons(potion)
         self.assertEquals(testPlayer.inv.get_item('Potion'), None)
         self.assertEquals(testPlayer.hp, 20)
-
 
 class enemytest(unittest.TestCase):
 
