@@ -12,6 +12,15 @@ class save(object):
         data["name"] = self.assetContainer.player.name
         data["hp"] = self.assetContainer.player.hp
         data["gold"] = self.assetContainer.player.gold
+        #data["inv"] = self.assetContainer.player.inv
+        data["max_hp"] = self.assetContainer.player.max_hp
+        data["attack"] = self.assetContainer.player.attack
+        data["defense"] = self.assetContainer.player.defense
+        data["armor"] = self.assetContainer.player.armor
+        data["level"] = self.assetContainer.player.level
+        data["speed"] = self.assetContainer.player.speed
+        data["weight"] = self.assetContainer.player.weight
+        data["xp"] = self.assetContainer.player.xp
         json.dump(data, f)  # Dumps the data dictionary into f
         f.close()  # Closes the file
         return "Game saved as {0}".format(self.assetContainer.player.name)

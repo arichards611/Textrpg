@@ -4,7 +4,7 @@ class cmdfactory(object): # This will take in the player's command, and execute 
 
     def factory(command, assetContainer): #Takes in the player's command, as well as assetContainer, which contains all player data to pass to each command.
         the_command = None
-        if command == ('quit'):
+        if command == ('quit') or ('exit'):
             the_command = quit.quit()
         elif command == ('shop'):
             the_command = shop.shop(assetContainer)

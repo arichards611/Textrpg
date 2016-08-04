@@ -12,5 +12,14 @@ class load(object):
         self.assetContainer.name = data["name"]
         self.assetContainer.hp = data["hp"]
         self.assetContainer.gold = data["gold"]
+        #self.assetContainer.player.inv = data["inv"]
+        self.assetContainer.player.max_hp = data["max_hp"]
+        self.assetContainer.player.attack = data["attack"]
+        self.assetContainer.player.defense = data["defense"]
+        self.assetContainer.player.armor = data["armor"]
+        self.assetContainer.player.level = data["level"]
+        self.assetContainer.player.speed = data["speed"]
+        self.assetContainer.player.weight = data["weight"]
+        self.assetContainer.player.xp = data["xp"]
         f.close()  # Close the file
         return "Game {0} loaded.".format(self.assetContainer.name)

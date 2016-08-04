@@ -4,7 +4,7 @@ import sys
 from inventory import inventory
 
 class player(object):
-    def __init__(self, hp, gold, inv, name):
+    def __init__(self, hp, gold, name):
         self.gold = gold
         self.hp = hp # This is the player's non-static HP.
         self.name = name
