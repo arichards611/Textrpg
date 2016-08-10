@@ -63,17 +63,17 @@ class playertest(unittest.TestCase):
 class enemytest(unittest.TestCase):
 
     def test_remove_health(self):
-        testEnemy = enemy("test", 10, 10, 10)
+        testEnemy = enemy("test", 10, 10, 10, 10, 10)
         testEnemy.remove_health(5)
         self.assertEquals(testEnemy.hp, 5)
 
     def test_remove_gold(self):
-        testEnemy = enemy("test", 10, 10, 10)
+        testEnemy = enemy("test", 10, 10, 10, 10, 10)
         testEnemy.remove_gold(5)
         self.assertEquals(testEnemy.gold, 5)
 
     def test_get_status(self):
-        testEnemy = enemy("test", 10, 10, 10)
+        testEnemy = enemy("test", 10, 10, 10, 10, 10)
         expected = ("*" * 10,
                "test",
                "Status:",
