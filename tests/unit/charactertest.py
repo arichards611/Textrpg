@@ -5,7 +5,7 @@ from items import *
 class playertest(unittest.TestCase):
 
     def test_add_health_below_max(self):
-        testPlayer = player(10, 10, [], "test");
+        testPlayer = player(10, 10, "test");
         testPlayer.add_health(5)
         self.assertEquals(testPlayer.hp, 15)
 
@@ -14,18 +14,18 @@ class playertest(unittest.TestCase):
         return
 
     def test_remove_gold(self):
-        testPlayer = player(10, 10, [], "test");
+        testPlayer = player(10, 10, "test");
         testPlayer.remove_gold(5)
         self.assertEquals(testPlayer.gold, 5)
 
     def test_add_gold(self):
-        testPlayer = player(10, 10, [], "test");
+        testPlayer = player(10, 10, "test");
         testPlayer.add_gold(5)
         self.assertEquals(testPlayer.gold, 15)
         return
 
     def test_get_status(self):
-        testPlayer = player(10, 10, [], "test");
+        testPlayer = player(10, 10, "test");
         expected = ("*" * 10,
                str("test") + " Level " + str(1),
                "Status:",
@@ -37,12 +37,12 @@ class playertest(unittest.TestCase):
         self.assertEquals(actual, expected)
 
     def test_xp_up_without_level_up(self):
-        testPlayer = player(10, 10, [], "test");
+        testPlayer = player(10, 10, "test");
         testPlayer.xp_up(10)
         self.assertEquals(testPlayer.xp, 10)
 
     def test_xp_up_level_up(self):
-        testPlayer = player(10, 10, [], "test");
+        testPlayer = player(10, 10, "test");
         testPlayer.xp_up(100)
         self.assertEquals(testPlayer.xp, 0)
         self.assertEquals(testPlayer.level, 2)
@@ -52,7 +52,7 @@ class playertest(unittest.TestCase):
         self.assertGreater(testPlayer.speed, 5)
 
     def test_use_cons(self):
-        testPlayer = player(10, 10, [], "test")
+        testPlayer = player(10, 10, "test")
         potion = consumable('Potion', 1, 10, 10)
         testPlayer.inv.add_item(potion)
         self.assertEquals(testPlayer.inv.get_item('Potion'), potion)
