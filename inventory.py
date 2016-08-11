@@ -5,8 +5,8 @@ class inventory(object):
     def __init__(self):
         self.items = []
 
-    def __str__(player): # Prints out inventory items in a nice neat charts
-        out = '\t'.join(['Name', 'Count', 'Cost'])
+    def __str__(player): # Prints out inventory items in a nice neat chart
+        out = '\t'.join(['Name\t', 'Count', 'Cost'])
         for item in player.items:
             out += '\n' + '\t'.join([str(x) for x in [item.name, item.count, item.cost]])
         return out
@@ -24,6 +24,10 @@ class inventory(object):
             for item in self.items:
                 if item.name == newitem.name:
                     item.count +=1
+                    return
+                else:
+                    self.items.append(newitem)
+                    return
 
     def remove_item(self, newitem):
         for item in self.items:

@@ -6,3 +6,11 @@ class consumable(object): #Consumable items, will be adding equipables in the fu
         self.count = count
         self.heal = heal
         self.cost = cost
+
+class weapon(object):
+    def __init__(self, name, count, attack, cost, weight):
+        self.name = name
+        self.count = count
+        self.attack = attack
+        self.cost = cost
+        self.weight = weight

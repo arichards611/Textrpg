@@ -36,7 +36,13 @@ class battle(object):
                     print ""
                     self.player_attack(enemy)
             elif choice == ("use"): #Uses items, and the enemy takes its turn
-                command.cmdfactory.cmdfactory.factory("inv", self.assetContainer)
+                print self.assetContainer.player.inv
+                use = raw_input("What would you like to use?: ")
+                use = use.lower()
+                if use == "potion":
+                    self.assetContainer.player.use_cons(use)
+                else:
+                    print "You cannot use that here!"
                 enemyturn = self.enemy_attack(enemy)
                 print ""
                 print str(enemyturn)

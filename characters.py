@@ -15,6 +15,7 @@ class player(object):
         self.armor = 0 # Reduces damage by 25% of armor (25% is only temporary)
         self.speed = 10 # Speed will determine who moves first. Can be negatively effected by weight
         self.weight = 0 # Weight of armor effects this.
+        self.equippedWeapon = ("None")
         self.level = 1
         self.xp = 0 # XP,
 
@@ -47,13 +48,14 @@ class player(object):
             sys.exit()
 
     def get_status(self):  # Since we are using some of the character variables, we pass self, and player
-        msg = ("*" * 10,
+        msg = ("*" * 30,
                str(self.name) + " Level " + str(self.level),
                "Status:",
                "Current HP: " + str(self.hp) + "/" + str(self.max_hp),
                "Current Gold: " + str(self.gold),
                "Current XP: " + str(self.xp),
-               "*" * 10)
+               "Current Weapon: " + str(self.equippedWeapon),
+               "*" * 30)
         return msg
 
     def xp_up(self, amount): # XP/Level up function, adds increases stats upon level up
@@ -74,6 +76,29 @@ class player(object):
                 self.inv.remove_item(cons)
             else:
                 print "You are at full health!"
+
+    def equipWeapon(self, item):
+        if self.equippedWeapon == ("None"):
+            if item.name.lower() == 'wood sword':
+                self.equippedWeapon = ("Wood Sword")
+                self.attack += item.attack
+                print "You have equipped your {0}".format(item.name)
+            else:
+                print "You can't equip that!"
+        else:
+            print "You already have a weapon equipped!"
+
+    def unequipWeapon(self, item):
+        if self.equippedWeapon == "None":
+            print "You have no weapon equipped!"
+        else:
+            if item.name.lower() == 'wood sword':
+                self.equippedWeapon =  ("None")
+                self.attack -= item.attack
+                print "You have unequipped your {0}".format(item.name)
+            else:
+                print "You can't unequip that!"
+        print "You have unequipped {0}".format(item.name)
 
 class enemy(object): #Enemies have less stats, since they don't have as much importance
     def __init__(self, name, attack, speed, hp, gold, xp):

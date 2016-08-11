@@ -11,10 +11,11 @@ class shop(object):
             option = raw_input("Welcome. What would you like to do? [Buy, Sell, Exit]: ")
             option = option.lower()
             if option == "buy":
-                shopinv = ["Potion"]
+                shopinv = ["Potion", "Wood Sword"]
                 print ("Items for sale are: {0}").format(shopinv)
                 buytem = raw_input("What would you like to buy?: ")
                 buytem = buytem.lower()
+
                 if buytem == ('potion'):
                     potion = items.consumable('Potion', 1, 10, 10)
                     quantity = raw_input("How many would you like to buy?: ")
@@ -34,6 +35,16 @@ class shop(object):
                             print "You can't buy 0 of an item."
                     else:
                         print "You can only enter numbers."
+
+                elif buytem == ('wood sword'):
+                    sword = items.weapon('Wood Sword', 1, 5, 50, 2)
+                    if self.assetContainer.player.gold < sword.cost:
+                        print "You don't have enough gold to buy that!"
+                    else:
+                        self.assetContainer.player.inv.add_item(sword)
+                        self.assetContainer.player.remove_gold(sword.cost)
+                        print "You bought {0} for {1} gold.".format(sword.name, sword.cost)
+
             elif option == "sell":
                 if self.assetContainer.player.inv.items == []:
                     print "You have no items to sell."

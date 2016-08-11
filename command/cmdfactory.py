@@ -1,4 +1,3 @@
-import os
 from staticcommands import *
 
 class cmdfactory(object): # This will take in the player's command, and execute it from the command's file in staticcommands
@@ -11,8 +10,16 @@ class cmdfactory(object): # This will take in the player's command, and execute 
             the_command = shop.shop(assetContainer)
         elif command == ('inv'):
             the_command = inv.inv(assetContainer)
+        elif command == ('gold'):
+            the_command = gold.gold(assetContainer)
+        elif command == ('equip'):
+            the_command = equip.equip(assetContainer)
+        elif command == ('unequip'):
+            the_command = unequip.unequip(assetContainer)
         elif command == ('help'):
             the_command = help.help()
+        elif command == ('stats'):
+            the_command = stats.stats(assetContainer)
         elif command == ('save'):
             the_command = save.save(assetContainer)
         elif command == ('load'):
