@@ -17,13 +17,23 @@ class shop(object):
                 buytem = buytem.lower()
                 if buytem == ('potion'):
                     potion = items.consumable('Potion', 1, 10, 10)
-                    if self.assetContainer.player.gold < potion.cost:
-                        print "You don't have enough gold to buy this!"
+                    quantity = raw_input("How many would you like to buy?: ")
+                    current = 0
+                    if quantity.isalnum():
+                        if quantity >= "1":
+                            cost = potion.cost * int(quantity)
+                            if self.assetContainer.player.gold < cost:
+                                print "You don't have enough gold to buy that!"
+                            else:
+                                while current < int(quantity):
+                                    self.assetContainer.player.inv.add_item(potion)
+                                    current += 1
+                                self.assetContainer.player.remove_gold(cost)
+                                print "You bought {0} {1} for {2} gold.".format(quantity, potion.name, cost)
+                        else:
+                            print "You can't buy 0 of an item."
                     else:
-                        self.assetContainer.player.inv.add_item(potion)
-                        self.assetContainer.player.remove_gold(potion.cost)
-                        print "You bought one {0} for {1} gold.".format(potion.name, potion.cost)
-                    #TODO Add quantity or stop dropping back to start of shop
+                        print "You can only enter numbers."
             elif option == "sell":
                 if self.assetContainer.player.inv.items == []:
                     print "You have no items to sell."

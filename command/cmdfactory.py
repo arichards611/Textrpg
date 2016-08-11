@@ -1,3 +1,4 @@
+import os
 from staticcommands import *
 
 class cmdfactory(object): # This will take in the player's command, and execute it from the command's file in staticcommands

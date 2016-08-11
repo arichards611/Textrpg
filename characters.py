@@ -4,7 +4,7 @@ import sys
 from inventory import inventory
 
 class player(object):
-    def __init__(self, hp, gold, inv, name):
+    def __init__(self, hp, gold, name):
         self.gold = gold
         self.hp = hp # This is the player's non-static HP.
         self.name = name
@@ -56,14 +56,14 @@ class player(object):
                "*" * 10)
         return msg
 
-    def xp_up(self, amount):
+    def xp_up(self, amount): # XP/Level up function, adds increases stats upon level up
         self.xp += amount
         if self.xp >= 100:
             self.xp -= 100
-            self.max_hp += random.randint(5,10)
-            self.attack += random.randint(2,5)
+            self.max_hp += random.randint(2,4)
+            self.attack += random.randint(1,3)
             self.defense += random.randint(1,3)
-            self.speed += random.randint(2,4)
+            self.speed += random.randint(1,2)
             self.level += 1
             print "Level up! Your stats are now: {0} Max HP, {1} Attack, {2} Defense, and {3} Speed!".format(self.max_hp, self.attack, self.defense, self.speed)
 
@@ -75,29 +75,22 @@ class player(object):
             else:
                 print "You are at full health!"
 
-class enemy(object):
-    def __init__(self, name, hp, gold, xp):
+class enemy(object): #Enemies have less stats, since they don't have as much importance
+    def __init__(self, name, attack, speed, hp, gold, xp):
         self.hp = hp
+        self.attack = attack
+        self.speed = speed
         self.gold = gold
         self.name = name
         self.xp = xp
 
 
-    def remove_gold(self, amount):
-        #do stuff and checks for gold
+    def remove_gold(self, amount): #remove gold function for the enemy class
         if  self.gold > 0:
             self.gold -= amount
             if self.gold <= 0:
                 self.gold = 0
 
-    def remove_health(self, amount):
+    def remove_health(self, amount): #remove health function for the enemy class
         if self.hp > 0:
             self.hp -= amount
-
-    def get_status(self):
-        msg = ("*" * 10,
-               str(self.name),
-               "Status:",
-               "Current HP: " + str(self.hp),
-               "*" * 10)
-        return msg
